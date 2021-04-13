@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<title></title>
+<script src="https://unpkg.com/vue@2.6.12"></script>
+
+<style type="text/css">
+<!--
+textarea { height: 30em; }
+textarea#original_text { width: 500px; }
+textarea#target_list { width: 100px; }
+textarea#matched_list { width: 100px; background-color: #eeeeee; }
+footer { text-align:center; font-size:0.85em; padding-top:30px; }
+--> 
+</style>
+
+<h1>都道府県めっけーたー</h1>
+
+<div id="app">
+    <textarea id="original_text" v-model="original_text"></textarea>
+    <textarea id="target_list" v-model="target_list"></textarea>
+    <textarea id="matched_list" v-model="matched_list" readonly>{{ matched_list }}</textarea>
+</div>
+
+<div id="usage">
+    <h2>使い方</h2>
+    <ul>
+        <li>左から順に「解析対象のテキスト」「見つけたい文字列」「見つかった文字列」です。</li>
+        <li>左と真ん中を書き換えると右の枠に解析結果が表示されます。</li>
+    </ul>
+</div>
+
+<script>
+
+    var news_article = `ＮＮＮのまとめによりますと、全国の新型コロナウイルスの新たな感染者は１３日午後６時４５分現在、３３８０人が確認されています。
+全国の新規感染者が火曜日に３０００人を超えるのは１月２６日以来で、感染者増加の傾向が鮮明となっています。
+都道府県別では大阪で１０９９人、兵庫で３９１人といずれも過去最多となったほか、１３日、まん延防止等重点措置の適用を国に要請する方針を示した愛知で１６８人の感染が確認されています。
+また、首都圏は東京で５１０人、埼玉で１５６人、神奈川で１１４人、千葉で６２人などとなっています。
+沖縄では、３日ぶりに１００人を超える１２５人の感染が確認されました。
+一方、１２日時点の全国の重症者は、前日から３３人増えて５９６人となりました。
+１３日、過去最多の感染者が判明した大阪府では、１４日、緊急の対策本部会議を開き、府内の学校に対して「クラブ活動の自粛」を要請する方向で調整していることがわかりました。
+また、大学に対しては対面式の授業ではなく「オンラインの授業」を求め、企業には、さらなる「在宅勤務」を求める方針だということです。`
+
+    var todofuken = `北海道
+青森
+岩手
+宮城
+秋田
+山形
+福島
+茨城
+栃木
+群馬
+埼玉
+千葉
+東京
+神奈川
+新潟
+富山
+石川
+福井
+山梨
+長野
+岐阜
+静岡
+愛知
+三重
+滋賀
+京都
+大阪
+兵庫
+奈良
+和歌山
+鳥取
+島根
+岡山
+広島
+山口
+徳島
+香川
+愛媛
+高知
+福岡
+佐賀
+長崎
+熊本
+大分
+宮崎
+鹿児島
+沖縄`
+
+    new Vue({
+        el: '#app',
+        data: {
+            original_text: news_article,
+            target_list: todofuken
+        },
+        computed: {
+            matched_list: function() {
+                var regObj = new RegExp(this.target_list.split('\n').join('|'), "g")
+                return this.original_text.match(regObj).join('\n')
+            }
+        }
+    })
+</script>
