@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<title></title>
+<script src="https://unpkg.com/vue@2.6.12"></script>
+
+<div id="app">
+    <ul>
+        <li v-for="item in items" v-bind:key="item.name">
+            {{ item.name }} {{ item.price }}円: <input type="number" v-model="item.quantity" min="0" max="5" />個
+        </li>
+    </ul>
+    <p>合計: {{ totalPrice }}円</p>
+</div>
+
+<script>
+    var items = [
+    {
+        name: '鉛筆',
+        price: 300,
+        quantity: 0
+    },
+    {
+        name: 'ノート',
+        price: 400,
+        quantity: 1
+    },
+    {
+        name: '消しゴム',
+        price: 500,
+        quantity: 2
+    },
+    ]
+    new Vue({
+        el: '#app',
+        data: {
+            items: items
+        },
+        computed: {
+            totalPrice: function() {
+                return this.items.reduce( function(sum, item) {
+                    return sum + item.price * item.quantity
+                }, 0)
+            }
+        }
+    })
+</script>

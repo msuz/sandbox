@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<title></title>
+<script src="https://unpkg.com/vue@2.6.12"></script>
+
+<div id="app">
+    <header-title></header-title>
+    <main-block></main-block>
+    <footer-title></footer-title>
+    <copyright-text></copyright-text>
+</div>
+
+<div id="app2"></div>
+
+<script type="text/x-template" id="main-content-template">
+    <ul>
+        <li v-for="v in arr" v-bind:key="v">{{ v }}</li>
+    </ul>
+</script>
+
+<script>
+    // 基本形：カスタムタグベースのグローバルコンポーネント
+    Vue.component('header-title', {
+        template: '<h1>ヘッダー</h1>'
+    })
+
+    // 親コンポーネント。子コンポーネントのカスタムタグを含む
+    Vue.component('main-block', {
+        template: '<div><main-title></main-title><main-content></main-content></div>'
+    })
+    // 子コンポーネント その1
+    Vue.component('main-title', {
+        template: '<h1>メイン</h1>'
+    })
+    // 子コンポーネント その2
+    Vue.component('main-content', {
+        // 長いテンプレートはHTML本文中に<script>タグで記載することもできる
+        template: '#main-content-template',
+
+        // コンポーネントのデータはオブジェクトではなく関数で返すべし
+        data: function() {
+            return {
+                arr: ['りんご', 'みかん']
+            }
+        }
+    })
+
+    // コンストラクタベースでサブクラスコンストラクタを作る方式
+    var VueFooterTitle = Vue.extend({
+        template: '<h1>フッター</h1>'
+    })
+    // 使い方1: カスタムタグ要素の第２引数に渡す
+    Vue.component('footer-title', VueFooterTitle)
+    // 使い方2: 特定の要素に直接マウントする
+    new VueFooterTitle().$mount('#app2')
+
+    // Vueインスタンス作成時にコンポーネントがまとめて反映される
+    new Vue({
+        el: '#app',
+        // インスタンス作成時の引数としてコンポーネントを定義することも出来る
+        components: {
+            'copyright-text': {
+                template: '<small>Copyright © 2021</small>'
+            }
+        }
+    })
+
+</script>

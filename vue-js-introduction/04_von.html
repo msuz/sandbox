@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<title></title>
+<script src="https://unpkg.com/vue@2.6.12"></script>
+
+<div id="app">
+    <p>{{ nums }}</p>
+    <button v-on:click="alertTotal($event)">Total</button>
+    <button @click="alertMax">Max</button>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            nums: [1, 2, 4, 3]
+        },
+        computed: {
+            total: function() {
+                return this.nums.reduce(function (sum, num) {
+                    return sum + num
+                }, 0)
+            }
+        },
+        methods: {
+            alertTotal: function(e) {
+                console.log(e)
+                alert(this.total)
+            },
+            alertMax: function() {
+                alert(Math.max(...this.nums))
+            }
+        }
+    })
+</script>

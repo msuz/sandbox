@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<title></title>
+<script src="https://unpkg.com/vue@2.6.12"></script>
+
+<div id="app">
+  <p v-if="true">exist</p>
+  <p v-if="false">not exist</p>
+  <p v-show="true">visible</p>
+  <p v-show="false">unbisible</p>
+  <p v-show="random">random</p>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        computed: {
+            random: function() {
+                return Math.random() > 0.5;
+            }
+        }
+    })
+</script>
