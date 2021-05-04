@@ -16,3 +16,7 @@ RUN pip install -r requirements.txt
 # （コンテナ内で作業する場合）必要なパッケージをインストール
 RUN apk update
 RUN apk add zsh vim tmux git tig
+
+# flaskを実行
+ENV FLASK_APP app.py
+CMD ["flask", "run", "--host", "0.0.0.0", "--port", "5000"]
