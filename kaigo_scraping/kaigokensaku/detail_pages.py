@@ -4,7 +4,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-class Detail:
+class DetailPages:
     #
     # インスタンス変数
     #
@@ -154,7 +154,7 @@ class Detail:
         for i in range(1,2):
             elements = soup.select('div#tableGroup-' + str(i) + ' table tr')
             if not elements: continue
-            data['kani_table' + str(i)] = Detail.parse_kani_table(elements)
+            data['kani_table' + str(i)] = DetailPages.parse_kani_table(elements)
 
         return data
 

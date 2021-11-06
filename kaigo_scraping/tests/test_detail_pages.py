@@ -1,12 +1,12 @@
 # coding: UTF-8
 
 from unittest import TestCase
-from kaigokensaku.detail import Detail
+from kaigokensaku.detail_pages import DetailPages
 #import re
 #import requests
 from bs4 import BeautifulSoup
 
-class TestDetail(TestCase):
+class TestDetailPages(TestCase):
     URL = 'https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0113513220-00&ServiceCd=110'
     URL_RELATIVE   = '/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0113513220-00&ServiceCd=110'
     URLS = {
@@ -18,20 +18,20 @@ class TestDetail(TestCase):
     URL_JIGYOSHO_NAME = '皆川病院訪問介護事業所みらく'
 
     def test_init_urls(self):
-        d = Detail(self.URL) # set_urls() called
+        d = DetailPages(self.URL) # set_urls() called
         self.assertEqual(d.get_urls(), self.URLS)
         self.assertEqual(d.get_url('original'), self.URLS['original'])
         self.assertEqual(d.get_url('__dummy__'), None) # error handling
 
     def test_generate_urls(self):
-        urls = Detail.generate_urls(self.URL)
+        urls = DetailPages.generate_urls(self.URL)
         self.assertEqual(urls, self.URLS)
 
-        urls = Detail.generate_urls(self.URL_RELATIVE)
+        urls = DetailPages.generate_urls(self.URL_RELATIVE)
         self.assertEqual(urls, self.URLS)
 
     def __test_load(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         result = d.load()
         self.assertTrue(result)
         data = d.get_data()
@@ -43,7 +43,7 @@ class TestDetail(TestCase):
         self.assertEqual(data['latitudeLongitude'], '42.408990800000000,141.103421000000020')
 
     def test_to_csv(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         data = {'prefCd': '01'}
         expect = '"01","","","","",""'
         d.set_data(data)
@@ -57,12 +57,12 @@ class TestDetail(TestCase):
         self.assertEqual(result, expect)
 
     def __test_get_page_text(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         page_text = d.get_page_text(self.URLS['kani'])
         self.assertTrue(self.URL_JIGYOSHO_NAME in page_text)
 
     def test_parse_kani_page(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         f = open('testdata/kani.html', 'r')
         page_text = f.read()
         f.close()
@@ -101,7 +101,7 @@ class TestDetail(TestCase):
         })
 
     def test_parse_kani_table01(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         f = open('testdata/kani_table01.html', 'r')
         page_text = f.read()
         f.close()
@@ -115,7 +115,7 @@ class TestDetail(TestCase):
         })
 
     def test_parse_kani_table02(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         f = open('testdata/kani_table02.html', 'r')
         page_text = f.read()
         f.close()
@@ -133,7 +133,7 @@ class TestDetail(TestCase):
         })
 
     def test_parse_feature_page(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         f = open('testdata/feature.html', 'r')
         page_text = f.read()
         f.close()
@@ -142,7 +142,7 @@ class TestDetail(TestCase):
         self.assertEqual(page_data['feature'], True)
 
     def test_parse_kihon_page(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         f = open('testdata/kihon.html', 'r')
         page_text = f.read()
         f.close()
@@ -151,7 +151,7 @@ class TestDetail(TestCase):
         self.assertEqual(page_data['kihon'], True)
 
     def test_parse_unei_page(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         f = open('testdata/unei.html', 'r')
         page_text = f.read()
         f.close()
@@ -160,7 +160,7 @@ class TestDetail(TestCase):
         self.assertEqual(page_data['unei'], True)
 
     def test_parse_original_page(self):
-        d = Detail(self.URL)
+        d = DetailPages(self.URL)
         f = open('testdata/original.html', 'r')
         page_text = f.read()
         f.close()
