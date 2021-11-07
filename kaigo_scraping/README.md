@@ -24,9 +24,10 @@ test_parse_kani_table03 (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_kani_table04 (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_kani_table05 (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_kani_table06 (tests.test_kani_page.TestKaniPage) ... ok
+test_parse_radar_chart (tests.test_kani_page.TestKaniPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 8 tests in 0.092s
+Ran 9 tests in 0.099s
 
 OK
 ```

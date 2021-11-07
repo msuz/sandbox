@@ -1,6 +1,7 @@
 # coding: UTF-8
 
 import re
+import json
 from bs4 import BeautifulSoup
 
 class KaniPage:
@@ -64,20 +65,22 @@ class KaniPage:
 
         return data
 
-    # ページ上部に複数個存在する複雑な表を解析してデータを取得する
+    # JavaScriptを解析して運営状況レーダーチャートのデータを取得する
     # @param1 script: BeautifulSoup().select_one()で取得した<script>タグ
     # @return: dict型で整形したデータ
     @staticmethod
     def parse_radar_chart(script):
-        data = {
-            '利用者の権利擁護': '5.0',
-            'サービスの質の確保への取組': '5.0',
-            '相談・苦情等への対応': '5.0',
-            '外部機関等との連携': '5.0',
-            '事業運営・管理': '5.0',
-            '安全・衛生管理等': '5.0',
-            '従業者の研修等': '4.0'
-        }
+        if not script: return None
+        code = script.get_text().replace('\n', ' ').strip()
+        json_str = re.sub(r'^.*var chartRadarData = \[([^;]+)\];.*$', r'\1', code)
+        json_str = json_str.replace(': jigyosyoName', ': "jigyosyoName"')
+        json_str = json_str.replace(': prefName', ': "prefName"')
+        json_data = json.loads(json_str)
+        data = {}
+        for x in json_data: data[x['checkHead']] = str(x['jigyosho'])
+        # 以下のような書き方も出来るが可読性が下がるかつPython3.5+に依存するので没
+        # from functools import reduce
+        # reduce(lambda r,t:{**r, t['checkHead']:t['jigyosho']}, dict, {})
         return data
 
     # ページ下部に複数個存在する複雑な表を解析してデータを取得する

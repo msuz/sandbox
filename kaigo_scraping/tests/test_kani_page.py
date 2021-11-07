@@ -69,6 +69,23 @@ class TestKaniPage(TestCase):
             '協力医療機関': '内藤クリニック'
         })
 
+    def test_parse_radar_chart(self):
+        f = open('testdata/kani_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = KaniPage.parse_radar_chart(script)
+        self.assertEqual(data, {
+            '利用者の権利擁護': '5.0',
+            'サービスの質の確保への取組': '5.0',
+            '相談・苦情等への対応': '5.0',
+            '外部機関等との連携': '5.0',
+            '事業運営・管理': '5.0',
+            '安全・衛生管理等': '5.0',
+            '従業者の研修等': '4.0'
+        })
+
     def test_parse_kani_table02(self):
         f = open('testdata/kani_table02.html', 'r')
         page_text = f.read()
