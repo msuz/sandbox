@@ -117,10 +117,15 @@ class KaniPage:
             # 1つの文字列として結合する。区切り文字は任意、ひとまずアンダースコア2つにしておく
             k = '__'.join([th.get_text().replace('\n',' ').strip() for th in revised_ths])
 
-            # <td>からvalueを生成、テキストが空かつ画像があれば1つ目のalt値を取得する
+            # <td>からvalueを生成
             td = tr.select_one('td')
-            v = td.get_text().replace('\n',' ').strip()
-            if not v and td.select_one('img'): v = td.select_one('img').get('alt').strip()
+            # <br>等のタグと改行コードは半角スペース1つに変換する
+            v = td.get_text(' ').replace('\n',' ').strip()
+            # 画像があればalt値を取得。1つ目のみ、順番はテキストよりも前に固定する
+            if td.select_one('img'):
+                v = td.select_one('img').get('alt').strip() + ' ' + v
+            # ムダなスペースは省略する
+            v = re.sub('  +', ' ', v).strip()
 
             # dictに追加
             data[k] = v

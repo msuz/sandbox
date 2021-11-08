@@ -171,3 +171,19 @@ class TestKaniPage(TestCase):
             '要介護度別入所者数__要介護５': '1人',
             '昨年度の退所者数': '2人'
         })
+
+    def test_parse_kani_table07(self):
+        f = open('testdata/kani_table07.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        trs = soup.select('tr')
+        data = KaniPage.parse_table(trs)
+        self.assertEqual(data, {
+            '苦情相談窓口': '011-384-0123',
+            '利用者の意見を把握する取組__有無': 'なし',
+            '利用者の意見を把握する取組__開示状況': 'あり',
+            '地域密着型サービスの外部評価の実施状況': 'あり 2020/08/14 第三者評価の結果',
+            '損害賠償保険の加入': 'あり',
+            '法人等が実施するサービス（または、同一敷地で実施するサービスを掲載）': '認知症対応型共同生活介護 介護予防認知症対応型共同生活介護'
+        })
