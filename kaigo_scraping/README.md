@@ -1,7 +1,16 @@
 # Test Result
 
+```
+$ python -m unittest discover tests 
+..................
+----------------------------------------------------------------------
+Ran 18 tests in 3.339s
+
+OK
+```
+
 ```bash
-$ python -m unittest -v tests.test_detail_pages
+$ python -m unittest tests.test_detail_pages -v
 test_generate_urls (tests.test_detail_pages.TestDetailPages) ... ok
 test_get_page_text (tests.test_detail_pages.TestDetailPages) ... ok
 test_init_urls (tests.test_detail_pages.TestDetailPages) ... ok
@@ -9,13 +18,13 @@ test_load (tests.test_detail_pages.TestDetailPages) ... ok
 test_to_csv (tests.test_detail_pages.TestDetailPages) ... ok
 
 ----------------------------------------------------------------------
-Ran 5 tests in 5.103s
+Ran 5 tests in 3.999s
 
 OK
 ```
 
 ```bash
-$ python -m unittest -v tests.test_kani_page
+$ python -m unittest tests.test_kani_page -v
 test_parse (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_basic_info (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_kani_table01 (tests.test_kani_page.TestKaniPage) ... ok
@@ -28,7 +37,47 @@ test_parse_kani_table07 (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_radar_chart (tests.test_kani_page.TestKaniPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 0.099s
+Ran 10 tests in 0.098s
+
+OK
+```
+
+```bash
+$ python -m unittest tests.test_feature_page -v
+test_parse (tests.test_feature_page.TestFeaturePage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.020s
+
+OK
+```
+
+```bash
+$ python -m unittest tests.test_kihon_page -v
+test_parse (tests.test_kihon_page.TestKihonPage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.100s
+
+OK
+```
+
+```bash
+$ python -m unittest tests.test_unei_page -v
+test_parse (tests.test_unei_page.TestUneiPage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.056s
+
+OK
+```
+
+```bash
+$ python -m unittest tests.test_original_page -v
+test_parse (tests.test_original_page.TestOriginalPage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.014s
 
 OK
 ```

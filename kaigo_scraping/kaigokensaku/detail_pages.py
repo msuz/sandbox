@@ -4,10 +4,10 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from kaigokensaku.kani_page import KaniPage
-#from kaigokensaku.feature_page import FeaturePage
-#from kaigokensaku.kihon_page import KihonPage
-#from kaigokensaku.unei_page import UneiPage
-#from kaigokensaku.original_page import OriginalPage
+from kaigokensaku.feature_page import FeaturePage
+from kaigokensaku.kihon_page import KihonPage
+from kaigokensaku.unei_page import UneiPage
+from kaigokensaku.original_page import OriginalPage
 
 class DetailPages:
     #
@@ -49,13 +49,26 @@ class DetailPages:
 
     # 各ページからデータを取得しインスタンス変数に格納する
     # ※予めself.set_urls()を実行しておくこと
+    # @params: なし
+    # @return: bool (True:成功 / False:失敗)
     @classmethod
     def load(self):
         for k, v in self.urls.items():
+            # 各ページに対応するパーサーを動的に識別して呼び出すための準備
+            # 例) KaniPage, FeaturePage,,
+            cls = globals().get(k.capitalize() + 'Page')
+            if not cls: return False # Error
+
+            # Webページからデータを取得する
             page_text = self.get_page_text(v)
             if not page_text: return False # Error
-            page_data = getattr(self, "parse_" + k + "_page")(page_text)
+
+            # ページを解析してデータを取得する
+            page_data = cls.parse(page_text)
             if not page_data: return False # Error
+
+            # インスタンス変数に値を追加する
+            self.data[k] = True
             self.data.update(page_data)
         return True
 
@@ -106,42 +119,3 @@ class DetailPages:
         if response.status_code != 200: return None # Error
         return response.text
 
-    # 「事業所の概要」ページのHTMLを解析してデータを取得する
-    @staticmethod
-    def parse_kani_page(page_text):
-        data = KaniPage.parse(page_text)
-        if not data: return None
-        data['kani'] = True
-        return data
-
-    # 「事業所の特色」ページのHTMLを解析してデータを取得する
-    @staticmethod
-    def parse_feature_page(page_text):
-        data = {'key': 'value'} # TODO: 実装
-        if not data: return None
-        data['feature'] = True
-        return data
-
-    # 「事業所の詳細」ページのHTMLを解析してデータを取得する
-    @staticmethod
-    def parse_kihon_page(page_text):
-        data = {'key': 'value'} # TODO: 実装
-        if not data: return None
-        data['kihon'] = True
-        return data
-
-    # 「運営状況」ページのHTMLを解析してデータを取得する
-    @staticmethod
-    def parse_unei_page(page_text):
-        data = {'key': 'value'} # TODO: 実装
-        if not data: return None
-        data['unei'] = True
-        return data
-
-    # 「その他」ページのHTMLを解析してデータを取得する
-    @staticmethod
-    def parse_original_page(page_text):
-        data = {'key': 'value'} # TODO: 実装
-        if not data: return None
-        data['original'] = True
-        return data
