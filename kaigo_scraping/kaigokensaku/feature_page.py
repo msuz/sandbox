@@ -36,7 +36,7 @@ class FeaturePage:
             if hasattr(FeaturePage, "parse_" + p_id): # 親要素idに対応する解析処理
                 v = getattr(FeaturePage, "parse_" + p_id)(n)
             elif hasattr(FeaturePage, "parse_" + l_id): # チャート表示内容の解析処理
-                v = getattr(FeaturePage, "parse_" + l_id)(l_id, script)
+                v = getattr(FeaturePage, "parse_" + l_id)(script)
             else: # デフォルト：次要素のテキスト
                 v = n.get_text().replace('\n', ' ').strip() # 改行コードはスペースに
                 v = re.sub('  +', ' ', v).strip() # 余分なスペースは削除
@@ -51,21 +51,49 @@ class FeaturePage:
         return {'key1': 'value1', 'key2': 'value2'} # TODO
 
     @staticmethod
-    # 「従業員の男女比」シリアルチャートの解析処理
-    def parse_legendSerialldiv_staff(l_id, script):
-        return 'value' # TODO
+    # JavaScript内で定義されている変数の値を取得する
+    # ※ var __NAME__ = [__VALUE__]; の書式で記述されていることが条件
+    # @param1 script:
+    # @param2 name: JavaScript内で記述されている変数名
+    # @return: JSONを解釈した変数。dict型のハズ
+    def parse_script_var(script, name):
+        code = script.get_text().replace('\n', ' ').strip()
+        json_str = re.sub(r'^.*var ' + name + r' = (\[[^;]+\]);.*$', r'\1', code)
+        data = json.loads(json_str)
+        return data
 
     @staticmethod
-    # 「従業員の年齢構成」パイチャートの解析処理
-    def parse_legendPiediv_staff(l_id, script):
-        return 'value' # TODO
+    # シリアルチャートの解析処理
+    def parse_chartSeriall(script, name):
+        if not script: return None
+        script_data = FeaturePage.parse_script_var(script, name)
+        data = {k: v for k, v in script_data[0].items() if k != 'people'}
+        return data
+
+    @staticmethod
+    # 「従業員の男女比」シリアルチャートの解析処理
+    def parse_legendSerialldiv_staff(script):
+        return FeaturePage.parse_chartSeriall(script, 'chartSeriallData_staff')
 
     @staticmethod
     # 「利用者の男女比」シリアルチャートの解析処理
-    def parse_legendSerialldiv_user(l_id, script):
-        return 'value' # TODO
+    def parse_legendSerialldiv_user(script):
+        return FeaturePage.parse_chartSeriall(script, 'chartSeriallData_user')
+
+    @staticmethod
+    # パイチャートの解析処理
+    def parse_chartPie(script, name):
+        if not script: return None
+        script_data = FeaturePage.parse_script_var(script, name)
+        data = {d['generation']: d['people'] for d in script_data}
+        return data
+
+    @staticmethod
+    # 「従業員の年齢構成」パイチャートの解析処理
+    def parse_legendPiediv_staff(script):
+        return FeaturePage.parse_chartPie(script, 'chartPieData_staff')
 
     @staticmethod
     # 「利用者の年齢構成」パイチャートの解析処理
-    def parse_legendPiediv_user(l_id, script):
-        return 'value' # TODO
+    def parse_legendPiediv_user(script):
+        return FeaturePage.parse_chartPie(script, 'chartPieData_user')
