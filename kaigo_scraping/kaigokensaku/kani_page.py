@@ -105,7 +105,7 @@ class KaniPage:
                 if not ths[i].get_text().replace('\n','').strip(): del ths[i]
             if not ths: continue # 有効な<th>が無かったらスキップして次の行へ
             # rowspanで複数行にまたがるセルを引き回す
-            if ths[0].get('rowspan'): 
+            if ths[0].get('rowspan'):
                 rowspan_count.append(int(ths[0].get('rowspan')))
                 rowspan_ths.append(ths[0])
                 ths = ths[1:]
