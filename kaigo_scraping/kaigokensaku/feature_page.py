@@ -33,11 +33,14 @@ class FeaturePage:
             n = h2.find_next() # 次要素
             p_id = h2.find_parent().get('id') or '' # 親要素id
             l_id = n.select_one('.legenddiv').get('id') if n.select('.legenddiv') else '' # 次要素内のグラフ要素id
+
+            # 専用の解析処理があればそれを使う、無ければデフォルト処理
             if hasattr(FeaturePage, "parse_" + p_id): # 親要素idに対応する解析処理
                 v = getattr(FeaturePage, "parse_" + p_id)(n)
             elif hasattr(FeaturePage, "parse_" + l_id): # チャート表示内容の解析処理
                 v = getattr(FeaturePage, "parse_" + l_id)(script)
-            else: # デフォルト：次要素のテキスト
+            else: # デフォルト
+                # 要素のテキスト
                 v = n.get_text().replace('\n', ' ').strip() # 改行コードはスペースに
                 v = re.sub('  +', ' ', v).strip() # 余分なスペースは削除
 
@@ -47,8 +50,20 @@ class FeaturePage:
 
     @staticmethod
     # 「賃金改善以外で取り組んでいる処遇改善の内容」の解析処理
-    def parse_shoguuKaizenBlock(n):
-        return {'key1': 'value1', 'key2': 'value2'} # TODO
+    def parse_shoguuKaizenBlock(dl):
+        if not dl: return None
+        if dl.name != 'dl': return None
+        dts = dl.select('dt')
+        data = {}
+        for dt in dts:
+            # <dt>内のテキストをkeyにする
+            k = dt.get_text().replace('\n', ' ').strip()
+            # <dd>内のテキストをvalueにする
+            # ※<li>をリストにする手もあるが階層が深くなり過ぎるので文字列型に集約する
+            v = dt.find_next().get_text(' ').replace('\n', ' ').strip() # タグの区切りと改行コードはスペースに
+            v = re.sub('  +', ' ', v).strip() # 余分なスペースは削除
+            data[k] = v
+        return data
 
     @staticmethod
     # JavaScript内で定義されている変数の値を取得する

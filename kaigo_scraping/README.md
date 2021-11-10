@@ -47,7 +47,7 @@ $ python -m unittest tests.test_feature_page -v
 test_parse (tests.test_feature_page.TestFeaturePage) ... ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.027s
+Ran 1 test in 0.028s
 
 OK
 ```
