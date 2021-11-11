@@ -36,3 +36,73 @@ class TestFeaturePage(TestCase):
         self.assertEqual(data['休暇制度の内容および取得状況'], '休暇は可能な限り連続でとれるように会社として努力しています、当施設の職員は全員１００％有給消化しております。')
         self.assertEqual(data['福利厚生の状況'], '社会保険等・懇親会など')
         self.assertEqual(data['離職率'], '当施設は≒２０％')
+
+    def test_parse_script_var(self):
+        f = open('testdata/feature_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = FeaturePage.parse_script_var(script, 'chartSeriallData_staff')
+        self.assertEqual(data, [{'people': '', 'male': 1, 'female': 7}])
+        data = FeaturePage.parse_script_var(script, 'chartSeriallData_user')
+        self.assertEqual(data, [{'people': '', 'male': 2, 'female': 7}])
+
+    def test_parse_chartSeriall(self):
+        f = open('testdata/feature_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = FeaturePage.parse_chartSeriall(script, 'chartSeriallData_staff')
+        self.assertEqual(data, {"male": 1, "female": 7})
+        data = FeaturePage.parse_chartSeriall(script, 'chartSeriallData_user')
+        self.assertEqual(data, {"male": 2, "female": 7})
+
+    def test_parse_legendSerialldiv_staff(self):
+        f = open('testdata/feature_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = FeaturePage.parse_legendSerialldiv_staff(script)
+        self.assertEqual(data, {"male": 1, "female": 7})
+
+    def test_parse_legendSerialldiv_user(self):
+        f = open('testdata/feature_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = FeaturePage.parse_legendSerialldiv_user(script)
+        self.assertEqual(data, {"male": 2, "female": 7})
+
+    def test_parse_chartPie(self):
+        f = open('testdata/feature_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = FeaturePage.parse_chartPie(script, 'chartPieData_staff')
+        self.assertEqual(data, {"20代": 2, "30代": 0, "40代": 0, "50代": 6, "60代〜": 0})
+        data = FeaturePage.parse_chartPie(script, 'chartPieData_user')
+        self.assertEqual(data, {"〜64歳": 0, "65〜74歳": 2, "75〜84歳": 2, "85〜94歳": 5, "95歳〜": 0})
+
+    def test_parse_legendPiediv_staff(self):
+        f = open('testdata/feature_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = FeaturePage.parse_legendPiediv_staff(script)
+        self.assertEqual(data, {"20代": 2, "30代": 0, "40代": 0, "50代": 6, "60代〜": 0})
+
+    def test_parse_legendPiediv_user(self):
+        f = open('testdata/feature_script01.html', 'r')
+        page_text = f.read()
+        f.close()
+        soup = BeautifulSoup(page_text, 'html.parser')
+        script = soup.select_one('script')
+        data = FeaturePage.parse_legendPiediv_user(script)
+        self.assertEqual(data, {"〜64歳": 0, "65〜74歳": 2, "75〜84歳": 2, "85〜94歳": 5, "95歳〜": 0})
+

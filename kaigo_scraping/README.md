@@ -44,10 +44,18 @@ OK
 
 ```bash
 $ python -m unittest tests.test_feature_page -v
+
 test_parse (tests.test_feature_page.TestFeaturePage) ... ok
+test_parse_chartPie (tests.test_feature_page.TestFeaturePage) ... ok
+test_parse_chartSeriall (tests.test_feature_page.TestFeaturePage) ... ok
+test_parse_legendPiediv_staff (tests.test_feature_page.TestFeaturePage) ... ok
+test_parse_legendPiediv_user (tests.test_feature_page.TestFeaturePage) ... ok
+test_parse_legendSerialldiv_staff (tests.test_feature_page.TestFeaturePage) ... ok
+test_parse_legendSerialldiv_user (tests.test_feature_page.TestFeaturePage) ... ok
+test_parse_script_var (tests.test_feature_page.TestFeaturePage) ... ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.028s
+Ran 8 tests in 0.030s
 
 OK
 ```

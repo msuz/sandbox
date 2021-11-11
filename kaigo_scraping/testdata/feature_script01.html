@@ -1,0 +1,262 @@
+        <script>
+            // amChart 従業員
+            // pie
+            var chartPie_staff;
+            var legendPie_staff;
+
+            var chartPieData_staff = [{
+             "generation": "20代",
+             "people": 2,
+             "color":"#e2787c"
+             }, {
+             "generation": "30代",
+             "people": 0,
+             "color":"#dbac74"
+             }, {
+             "generation": "40代",
+             "people": 0,
+             "color":"#e0dc7a"
+             }, {
+             "generation": "50代",
+             "people": 6,
+             "color":"#91b775"
+             }, {
+             "generation": "60代〜",
+             "people": 0,
+             "color":"#638bc4"
+             }];
+            AmCharts.ready(function () {
+             chartPie_user = new AmCharts.AmPieChart();
+             // PIE CHART
+             chartPie_staff = new AmCharts.AmPieChart();
+                 chartPie_staff.dataProvider = chartPieData_staff;
+                 chartPie_staff.titleField = "generation";
+                 chartPie_staff.valueField = "people";
+                 chartPie_staff.colorField = "color";
+                 chartPie_staff.startDuration = 0;
+                 chartPie_staff.fontSize = 15;
+                 chartPie_staff.color = "#333333";
+                 chartPie_staff.outlineColor = "#FFFFFF";
+                 chartPie_staff.outlineAlpha = 0.8;
+                 chartPie_staff.outlineThickness = 2;
+                 chartPie_staff.startEffect = false;
+
+             legendPie_staff = new AmCharts.AmLegend();
+                 legendPie_staff.borderAlpha = 0.3;
+                 legendPie_staff.horizontalGap = 10;
+                 legendPie_staff.valueText = "[[value]]人";
+                 legendPie_staff.markerType = "circle";
+                 legendPie_staff.color = "#333333";
+                 legendPie_staff.labelText = "[[title]]:";
+
+             chartPie_staff.balloonText = "[[title]]:<br><span style='font-size:14px'><b>[[value]]人</b> ([[percents]]%)</span>";
+             chartPie_staff.addLegend(legendPie_staff,"legendPiediv_staff");
+
+             chartPie_staff.write("chartPiediv_staff");
+            });
+
+            // Seriall
+            var chartSeriall_staff;
+
+            var chartSeriallData_staff = [{
+             "people": "",
+             "male": 1,
+             "female": 7
+             }];
+
+            AmCharts.ready(function () {
+             // SERIALL CHART
+             chartSeriall_staff = new AmCharts.AmSerialChart();
+             chartSeriall_staff.dataProvider = chartSeriallData_staff;
+             chartSeriall_staff.categoryField = "people";
+             chartSeriall_staff.plotAreaBorderAlpha = 0.2;
+             chartSeriall_staff.fontSize = 15;
+             chartSeriall_staff.color = "#333333";
+             chartSeriall_staff.rotate = true;
+
+             // AXES
+             // Category
+             var categoryAxis = chartSeriall_staff.categoryAxis;
+             categoryAxis.gridAlpha = 0.1;
+             categoryAxis.axisAlpha = 0;
+             categoryAxis.gridPosition = "start";
+
+             // value
+             var valueAxis = new AmCharts.ValueAxis();
+             valueAxis.stackType = "100%";
+             valueAxis.unit = "%";
+             valueAxis.gridAlpha = 0.1;
+             valueAxis.axisAlpha = 0;
+             chartSeriall_staff.addValueAxis(valueAxis);
+
+             // GRAPHS
+             // firstgraph
+             var graph = new AmCharts.AmGraph();
+             graph.title = "男性";
+             graph.labelText = "[[title]]:[[percents]]%";
+             graph.valueField = "male";
+             graph.type = "column";
+             graph.lineAlpha = 0;
+             graph.fillAlphas = 1;
+             graph.lineColor = "#76aecb";
+             graph.balloonText = "[[title]]:<br><span style='font-size:14px'>[[category]]<b>[[value]]</b>([[percents]]%)</span>";
+             chartSeriall_staff.addGraph(graph);
+
+             // second graph
+             graph = new AmCharts.AmGraph();
+             graph.title = "女性";
+             graph.labelText = "[[title]]:[[percents]]%";
+             graph.valueField = "female";
+             graph.type = "column";
+             graph.lineAlpha = 0;
+             graph.fillAlphas = 1;
+             graph.lineColor = "#e78d91";
+             graph.balloonText = "[[title]]:<br><span style='font-size:14px'>[[category]]<b>[[value]]</b>([[percents]]%)</span>";
+             chartSeriall_staff.addGraph(graph);
+
+             // LEGEND
+             var legendSeriall = new AmCharts.AmLegend();
+             legendSeriall.borderAlpha = 0.3;
+             legendSeriall.horizontalGap = 10;
+             legendSeriall.markerSize = 10;
+             legendSeriall.maxColumns = 2;
+             legendSeriall.useGraphSettings = true;
+             legendSeriall.labelText = "[[title]]:";
+             legendSeriall.periodValueText = "[[value.sum]]";
+             legendSeriall.color = "#333333";
+             chartSeriall_staff.addLegend(legendSeriall,"legendSerialldiv_staff");
+
+             // WRITE
+             chartSeriall_staff.write("chartSerialldiv_staff");
+            });
+
+            // amChart 利用者
+            // pie
+            var chartPie_user;
+            var legendPie_user;
+
+            var chartPieData_user = [{
+             "generation": "〜64歳",
+             "people": 0,
+             "color":"#e2787c"
+             }, {
+             "generation": "65〜74歳",
+             "people": 2,
+             "color":"#dbac74"
+             }, {
+             "generation": "75〜84歳",
+             "people": 2,
+             "color":"#e0dc7a"
+             }, {
+             "generation": "85〜94歳",
+             "people": 5,
+             "color":"#91b775"
+             }, {
+             "generation": "95歳〜",
+             "people": 0,
+             "color":"#638bc4"
+             }];
+            AmCharts.ready(function () {
+             // PIE CHART
+             chartPie_user = new AmCharts.AmPieChart();
+                 chartPie_user.dataProvider = chartPieData_user;
+                 chartPie_user.titleField = "generation";
+                 chartPie_user.valueField = "people";
+                 chartPie_user.colorField = "color";
+                 chartPie_user.startDuration = 0;
+                 chartPie_user.fontSize = 15;
+                 chartPie_user.color = "#333333";
+                 chartPie_user.outlineColor = "#FFFFFF";
+                 chartPie_user.outlineAlpha = 0.8;
+                 chartPie_user.outlineThickness = 2;
+                 chartPie_user.startEffect = false;
+
+             legendPie_user = new AmCharts.AmLegend();
+                 legendPie_user.borderAlpha = 0.3;
+                 legendPie_user.horizontalGap = 10;
+                 legendPie_user.valueText = "[[value]]人";
+                 legendPie_user.markerType = "circle";
+                 legendPie_user.color = "#333333";
+                 legendPie_user.labelText = "[[title]]:";
+
+             chartPie_user.balloonText = "[[title]]:<br /><span style='font-size:14px'><b>[[value]]人</b> ([[percents]]%)</span>";
+             chartPie_user.addLegend(legendPie_user,"legendPiediv_user");
+
+             chartPie_user.write("chartPiediv_user");
+            });
+
+            // Seriall
+            var chartSeriall_user;
+
+            var chartSeriallData_user = [{
+             "people": "",
+             "male": 2,
+             "female": 7
+             }];
+
+            AmCharts.ready(function () {
+             // SERIALL CHART
+             chartSeriall_user = new AmCharts.AmSerialChart();
+             chartSeriall_user.dataProvider = chartSeriallData_user;
+             chartSeriall_user.categoryField = "people";
+             chartSeriall_user.plotAreaBorderAlpha = 0.2;
+             chartSeriall_user.fontSize = 15;
+             chartSeriall_user.color = "#333333";
+             chartSeriall_user.rotate = true;
+
+             // AXES
+             // Category
+             var categoryAxis = chartSeriall_user.categoryAxis;
+             categoryAxis.gridAlpha = 0.1;
+             categoryAxis.axisAlpha = 0;
+             categoryAxis.gridPosition = "start";
+
+             // value
+             var valueAxis = new AmCharts.ValueAxis();
+             valueAxis.stackType = "100%";
+             valueAxis.unit = "%";
+             valueAxis.gridAlpha = 0.1;
+             valueAxis.axisAlpha = 0;
+             chartSeriall_user.addValueAxis(valueAxis);
+
+             // GRAPHS
+             // firstgraph
+             var graph = new AmCharts.AmGraph();
+             graph.title = "男性";
+             graph.labelText = "[[title]]:[[percents]]%";
+             graph.valueField = "male";
+             graph.type = "column";
+             graph.lineAlpha = 0;
+             graph.fillAlphas = 1;
+             graph.lineColor = "#76aecb";
+             graph.balloonText = "[[title]]:<br><span style='font-size:14px'>[[category]]<b>[[value]]</b>([[percents]]%)</span>";
+             chartSeriall_user.addGraph(graph);
+
+             // second graph
+             graph = new AmCharts.AmGraph();
+             graph.title = "女性";
+             graph.labelText = "[[title]]:[[percents]]%";
+             graph.valueField = "female";
+             graph.type = "column";
+             graph.lineAlpha = 0;
+             graph.fillAlphas = 1;
+             graph.lineColor = "#e78d91";
+             graph.balloonText = "[[title]]:<br><span style='font-size:14px'>[[category]]<b>[[value]]</b>([[percents]]%)</span>";
+             chartSeriall_user.addGraph(graph);
+
+             // LEGEND
+             var legendSeriall = new AmCharts.AmLegend();
+             legendSeriall.borderAlpha = 0.3;
+             legendSeriall.horizontalGap = 10;
+             legendSeriall.markerSize = 10;
+             legendSeriall.maxColumns = 2;
+             legendSeriall.useGraphSettings = true;
+             legendSeriall.labelText = "[[title]]:";
+             legendSeriall.periodValueText = "[[value.sum]]";
+             legendSeriall.color = "#333333";
+             chartSeriall_user.addLegend(legendSeriall,"legendSerialldiv_user");
+
+             // WRITE
+             chartSeriall_user.write("chartSerialldiv_user");
+            });
+        </script>

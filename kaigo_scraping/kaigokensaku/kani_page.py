@@ -28,7 +28,6 @@ class KaniPage:
 
         return data
 
-
     # ページ上部に複数個存在する複雑な表を解析してデータを取得する
     # @param1 ページ全体のBeautifulSoupオブジェクト
     # @return: dict型で整形したデータ
@@ -131,5 +130,3 @@ class KaniPage:
             data[k] = v
 
         return data
-
-
