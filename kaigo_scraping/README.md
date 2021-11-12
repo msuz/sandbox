@@ -63,9 +63,10 @@ OK
 ```bash
 $ python -m unittest tests.test_kihon_page -v
 test_parse (tests.test_kihon_page.TestKihonPage) ... ok
+test_parse_kihon_table01 (tests.test_kihon_page.TestKihonPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.100s
+Ran 2 tests in 0.092s
 
 OK
 ```
