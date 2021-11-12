@@ -105,4 +105,3 @@ class TestFeaturePage(TestCase):
         script = soup.select_one('script')
         data = FeaturePage.parse_legendPiediv_user(script)
         self.assertEqual(data, {"〜64歳": 0, "65〜74歳": 2, "75〜84歳": 2, "85〜94歳": 5, "95歳〜": 0})
-

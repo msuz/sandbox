@@ -66,18 +66,6 @@ class FeaturePage(DetailPage):
             data[k] = v
         return data
 
-    @staticmethod
-    # JavaScript内で定義されている変数の値を取得する
-    # ※ var __NAME__ = [__VALUE__]; の書式で記述されていることが条件
-    # @param1 script:
-    # @param2 name: JavaScript内で記述されている変数名
-    # @return: JSONを解釈した変数。dict型のハズ
-    def parse_script_var(script, name):
-        code = script.get_text().replace('\n', ' ').strip()
-        json_str = re.sub(r'^.*var ' + name + r' = (\[[^;]+\]);.*$', r'\1', code)
-        data = json.loads(json_str)
-        return data
-
     @classmethod
     # シリアルチャートの解析処理
     def parse_chartSeriall(cls, script, name):
