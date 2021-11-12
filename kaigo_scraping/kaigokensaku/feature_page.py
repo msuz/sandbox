@@ -3,8 +3,9 @@
 import re
 import json
 from bs4 import BeautifulSoup
+from kaigokensaku.detail_page import DetailPage
 
-class FeaturePage:
+class FeaturePage(DetailPage):
 
     # 「事業所の特色」ページを解析してデータを取得する
     # @param1: HTMLテキスト
@@ -77,38 +78,38 @@ class FeaturePage:
         data = json.loads(json_str)
         return data
 
-    @staticmethod
+    @classmethod
     # シリアルチャートの解析処理
-    def parse_chartSeriall(script, name):
+    def parse_chartSeriall(cls, script, name):
         if not script: return None
-        script_data = FeaturePage.parse_script_var(script, name)
+        script_data = cls.parse_script_var(script, name)
         data = {k: v for k, v in script_data[0].items() if k != 'people'}
         return data
 
-    @staticmethod
-    # 「従業員の男女比」シリアルチャートの解析処理
-    def parse_legendSerialldiv_staff(script):
-        return FeaturePage.parse_chartSeriall(script, 'chartSeriallData_staff')
-
-    @staticmethod
-    # 「利用者の男女比」シリアルチャートの解析処理
-    def parse_legendSerialldiv_user(script):
-        return FeaturePage.parse_chartSeriall(script, 'chartSeriallData_user')
-
-    @staticmethod
+    @classmethod
     # パイチャートの解析処理
-    def parse_chartPie(script, name):
+    def parse_chartPie(cls, script, name):
         if not script: return None
-        script_data = FeaturePage.parse_script_var(script, name)
+        script_data = cls.parse_script_var(script, name)
         data = {d['generation']: d['people'] for d in script_data}
         return data
 
-    @staticmethod
-    # 「従業員の年齢構成」パイチャートの解析処理
-    def parse_legendPiediv_staff(script):
-        return FeaturePage.parse_chartPie(script, 'chartPieData_staff')
+    @classmethod
+    # 「従業員の男女比」シリアルチャートの解析処理
+    def parse_legendSerialldiv_staff(cls, script):
+        return cls.parse_chartSeriall(script, 'chartSeriallData_staff')
 
-    @staticmethod
+    @classmethod
+    # 「利用者の男女比」シリアルチャートの解析処理
+    def parse_legendSerialldiv_user(cls, script):
+        return cls.parse_chartSeriall(script, 'chartSeriallData_user')
+
+    @classmethod
+    # 「従業員の年齢構成」パイチャートの解析処理
+    def parse_legendPiediv_staff(cls, script):
+        return cls.parse_chartPie(script, 'chartPieData_staff')
+
+    @classmethod
     # 「利用者の年齢構成」パイチャートの解析処理
-    def parse_legendPiediv_user(script):
-        return FeaturePage.parse_chartPie(script, 'chartPieData_user')
+    def parse_legendPiediv_user(cls, script):
+        return cls.parse_chartPie(script, 'chartPieData_user')
