@@ -57,27 +57,34 @@ class DetailPage:
 
         # <tr> 1行ごとに逐次処理
         for tr in trs:
+            sufix = ''
 
             # <th>からkeyを生成
             ths = tr.select('th')
             for i in reversed(range(len(ths))):
                 if not ths[i].get_text().replace('\n','').strip(): del ths[i]
-            if not ths: continue # 有効な<th>が無かったらスキップして次の行へ
-            # rowspanで複数行にまたがるセルを引き回す
-            if ths[0].get('rowspan'):
-                rowspan_count.append(int(ths[0].get('rowspan')))
-                rowspan_ths.append(ths[0])
-                ths = ths[1:]
-            revised_ths = rowspan_ths + ths
+            if not ths: # 有効な<th>が無い場合、
+                if not rowspan_count: continue # rowspan <th>も無ければスキップして次の行へ
+                revised_ths = rowspan_ths + [] # rowspan <th> があれば処理を継続
+                sufix = '__l' + str(rowspan_count[-1]) # 名前が重複するのを避けるためのsufix
+            else:
+                # rowspanで複数行にまたがるセルを引き回す
+                if ths[0].get('rowspan'):
+                    rowspan_count.append(int(ths[0].get('rowspan')))
+                    rowspan_ths.append(ths[0])
+                    ths = ths[1:]
+                revised_ths = rowspan_ths + ths
             # rowspanで指定された回数に達したらセルの値を引き回すのをやめる
             for i in reversed(range(len(rowspan_count))):
                 rowspan_count[i] -= 1
                 if rowspan_count[i] <= 0: del rowspan_count[i], rowspan_ths[i]
             # 1つの文字列として結合する。区切り文字は任意、ひとまずアンダースコア2つにしておく
             k = '__'.join([th.get_text().replace('\n',' ').strip() for th in revised_ths])
+            k += sufix
 
             # <td>からvalueを生成
             td = tr.select_one('td')
+            if not td: continue
             # <br>等のタグと改行コードは半角スペース1つに変換する
             v = td.get_text(' ').replace('\n',' ').strip()
             # 画像があればalt値を取得。1つ目のみ、順番はテキストよりも前に固定する
