@@ -1,10 +1,10 @@
 # Test Result
 
 ```
-$ python -m unittest discover tests 
-..................
+$ python -m unittest discover tests
+............................
 ----------------------------------------------------------------------
-Ran 18 tests in 3.339s
+Ran 28 tests in 5.660s
 
 OK
 ```
@@ -77,7 +77,7 @@ $ python -m unittest tests.test_unei_page -v
 test_parse (tests.test_unei_page.TestUneiPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.056s
+Ran 1 test in 0.049s
 
 OK
 ```
@@ -87,7 +87,7 @@ $ python -m unittest tests.test_original_page -v
 test_parse (tests.test_original_page.TestOriginalPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.014s
+Ran 1 test in 0.013s
 
 OK
 ```

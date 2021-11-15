@@ -13,4 +13,4 @@ class TestUneiPage(TestCase):
         self.assertTrue('グループホームほのぼのさくら' in page_text)
         data = UneiPage.parse(page_text)
 
-        self.assertEqual(data, {'dummy_key': 'dummy_value'})
+        self.assertEqual(data, {'key': 'value'})
