@@ -99,14 +99,28 @@ class DetailPage:
                 # ※以下のアルゴリズムは厳密さに欠けるので要注意
                 if td.find_next() and td.find_next().name == 'th': # <td> のすぐ後ろに <th> 要素がある場合
                     k = cls.parse_ths(revised_ths[:-1]) # <th> の一番最後の要素以外をkeyとする
+                    k = cls.rename_duplicated_key(k, data.keys()) # 名前が重複してたら連番を割り振る
                     v = cls.parse_tds(revised_tds) # ここまでの <td> の値をvalueとする
                     data[k] = v # dictに追加
                     revised_tds = [] # 出力対象 <td> リストを初期化
             k = cls.parse_ths(revised_ths, sufix) # <th> リストをkeyに
+            k = cls.rename_duplicated_key(k, data.keys()) # 名前が重複してたら連番を割り振る
             v = cls.parse_tds(revised_tds) # <td> リストをvalueに
             data[k] = v # dictに追加
 
         return data
+
+    # 名前が重複してたら連番を割り振る
+    # @param1 key: キーとなる対象の文字列
+    # @param2 keys: すでに存在している重複検査対象となる文字列のリスト
+    # @return: 文字列
+    @staticmethod
+    def rename_duplicated_key(key, keys):
+        if not key in keys: return key # 重複してなかったら何もしない
+        for i in range(2, 10): # (2)〜(9) を
+            new_key = '%s(%s)' % (key, i) # 末尾に付ける
+            if not new_key in keys: return new_key # 重複してなかったらそれを返す
+        return None # Error
 
     # <th>リストの値を文字列として返す
     # @param1 trs: BeautifulSoup().select()で取得した<th>タグのリスト
