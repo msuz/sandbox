@@ -66,9 +66,10 @@ test_parse (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table01_01 (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table01_02 (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table02 (tests.test_kihon_page.TestKihonPage) ... ok
+test_parse_kihon_table03 (tests.test_kihon_page.TestKihonPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 4 tests in 0.143s
+Ran 5 tests in 0.170s
 
 OK
 ```
