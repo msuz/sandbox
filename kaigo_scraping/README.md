@@ -2,9 +2,9 @@
 
 ```
 $ python -m unittest discover tests
-............................
+.............................
 ----------------------------------------------------------------------
-Ran 28 tests in 5.660s
+Ran 29 tests in 4.476s
 
 OK
 ```
@@ -63,11 +63,12 @@ OK
 ```bash
 $ python -m unittest tests.test_kihon_page -v
 test_parse (tests.test_kihon_page.TestKihonPage) ... ok
-test_parse_kihon_table01 (tests.test_kihon_page.TestKihonPage) ... ok
+test_parse_kihon_table01_01 (tests.test_kihon_page.TestKihonPage) ... ok
+test_parse_kihon_table01_02 (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table02 (tests.test_kihon_page.TestKihonPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 3 tests in 0.129s
+Ran 4 tests in 0.143s
 
 OK
 ```
