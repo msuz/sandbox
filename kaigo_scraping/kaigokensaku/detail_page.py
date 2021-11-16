@@ -59,7 +59,6 @@ class DetailPage:
         # <tr> 1行ごとに逐次処理
         for tr in trs:
             revised_ths = []
-            sufix = ''
 
             # <th>からkeyを生成
             ths = tr.select('th')
@@ -69,7 +68,6 @@ class DetailPage:
             if not ths: # 有効な <th> が無い場合、
                 if rowspan_count: # rowspan <th> があれば、
                     revised_ths = rowspan_ths + [] # それを使う。参照渡しを避けるために空リストと結合
-                    sufix = '__l' + str(rowspan_count[-1]) # 名前が重複するのを避けるためのsufix
                 elif unused_ths: # 前行で未使用の <th> があれば、
                     revised_ths = unused_ths + [] # それを使う。参照渡しを避けるために空リストと結合
             else: # 有効な <th> があれば
@@ -103,7 +101,7 @@ class DetailPage:
                     v = cls.parse_tds(revised_tds) # ここまでの <td> の値をvalueとする
                     data[k] = v # dictに追加
                     revised_tds = [] # 出力対象 <td> リストを初期化
-            k = cls.parse_ths(revised_ths, sufix) # <th> リストをkeyに
+            k = cls.parse_ths(revised_ths) # <th> リストをkeyに
             k = cls.rename_duplicated_key(k, data.keys()) # 名前が重複してたら連番を割り振る
             v = cls.parse_tds(revised_tds) # <td> リストをvalueに
             data[k] = v # dictに追加
@@ -126,11 +124,10 @@ class DetailPage:
     # @param1 trs: BeautifulSoup().select()で取得した<th>タグのリスト
     # @return: 文字列
     @staticmethod
-    def parse_ths(ths, sufix=''):
+    def parse_ths(ths):
         if not ths: return None # Error
         l = [th.get_text().replace('\n',' ').strip() for th in ths]
         s = '__'.join(l) # 区切り文字は任意、ひとまずアンダースコア2つにしておく
-        s += sufix
         return s
 
     # <td>リストの値を文字列として返す
