@@ -95,7 +95,7 @@ class DetailPage:
             for td in tds:
                 revised_tds.append(td) # <td> の値を文字列に
                 # ※以下のアルゴリズムは厳密さに欠けるので要注意
-                if td.find_next() and td.find_next().name == 'th': # <td> のすぐ後ろに <th> 要素がある場合
+                if td.find_next_sibling() and td.find_next_sibling().name == 'th': # <td> のすぐ後ろに <th> 要素がある場合
                     k = cls.parse_ths(revised_ths[:-1]) # <th> の一番最後の要素以外をkeyとする
                     k = cls.rename_duplicated_key(k, data.keys()) # 名前が重複してたら連番を割り振る
                     v = cls.parse_tds(revised_tds) # ここまでの <td> の値をvalueとする

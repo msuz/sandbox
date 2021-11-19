@@ -2,9 +2,9 @@
 
 ```
 $ python -m unittest discover tests
-.............................
+................................
 ----------------------------------------------------------------------
-Ran 29 tests in 4.476s
+Ran 32 tests in 5.994s
 
 OK
 ```
@@ -68,9 +68,10 @@ test_parse_kihon_table01_02 (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table02 (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table03 (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table04 (tests.test_kihon_page.TestKihonPage) ... ok
+test_parse_kihon_table05 (tests.test_kihon_page.TestKihonPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.229s
+Ran 7 tests in 0.234s
 
 OK
 ```
