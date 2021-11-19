@@ -71,7 +71,7 @@ test_parse_kihon_table04 (tests.test_kihon_page.TestKihonPage) ... ok
 test_parse_kihon_table05 (tests.test_kihon_page.TestKihonPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 7 tests in 0.234s
+Ran 7 tests in 0.317s
 
 OK
 ```

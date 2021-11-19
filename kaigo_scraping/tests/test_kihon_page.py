@@ -13,7 +13,33 @@ class TestKihonPage(TestCase):
         self.assertTrue('グループホームほのぼのさくら' in page_text)
         data = KihonPage.parse(page_text)
 
-        self.assertEqual(data, {'key': 'value'})
+        self.maxDiff = None # テスト結果のデバッグ出力強化
+        self.assertEqual(list(data.keys()), [
+            '１．事業所を運営する法人等に関する事項',
+            '１．事業所を運営する法人等に関する事項(2)',
+            '２．介護サービス（予防を含む）を提供し、又は提供しようとする事業所に関する事項',
+            '３．事業所において介護サービス（予防を含む）に従事する従業者',
+            '４．介護サービス（予防を含む）の内容に関する事項',
+            '５．介護サービス（予防を含む）を利用するに当たっての利用料等に関する事項',
+        ])
+        self.assertEqual(
+            data['１．事業所を運営する法人等に関する事項']['法人等の名称__法人等の種類'],
+            'ＮＰＯ法人')
+        self.assertEqual(
+            data['１．事業所を運営する法人等に関する事項(2)']['訪問介護'],
+            'なし')
+        self.assertEqual(
+            data['２．介護サービス（予防を含む）を提供し、又は提供しようとする事業所に関する事項']['事業所の名称'],
+            'グループホームほのぼのさくら')
+        self.assertEqual(
+            data['３．事業所において介護サービス（予防を含む）に従事する従業者']['介護職員１人当たりの利用者数'],
+            '1人')
+        self.assertEqual(
+            data['４．介護サービス（予防を含む）の内容に関する事項']['入院時費用'],
+            'あり')
+        self.assertEqual(
+            data['５．介護サービス（予防を含む）を利用するに当たっての利用料等に関する事項']['敷金'],
+            'なし')
 
     # １．事業所を運営する法人等に関する事項 
     def test_parse_kihon_table01_01(self):
