@@ -17,33 +17,27 @@ class DetailPages:
     data = {}
 
     #
-    # クラスメソッド
+    # インスタンスメソッド
     #
-    @classmethod
     def __init__(self, url):
         self.set_urls(url)
         return
 
-    @classmethod
     def set_urls(self, url):
         self.urls = self.generate_urls(url)
         return True
 
-    @classmethod
     def get_urls(self):
         return self.urls
 
-    @classmethod
     def get_url(self, key):
         if not key in self.urls: return None
         return self.urls[key]
 
-    @classmethod
     def set_data(self, data):
         self.data = data
         return True
 
-    @classmethod
     def get_data(self):
         return self.data
 
@@ -51,7 +45,6 @@ class DetailPages:
     # ※予めself.set_urls()を実行しておくこと
     # @params: なし
     # @return: bool (True:成功 / False:失敗)
-    @classmethod
     def load(self):
         for k, v in self.urls.items():
             # 各ページに対応するパーサーを動的に識別して呼び出すための準備
@@ -74,7 +67,6 @@ class DetailPages:
 
     # 各ページからデータを取得しインスタンス変数に格納する
     # ※予めself.load()を実行しておくこと
-    @classmethod
     def to_csv(self):
         # 出力項目の一覧 ※順序に注意
         keys = [
