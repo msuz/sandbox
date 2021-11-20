@@ -18,21 +18,38 @@ class TestKaniPage(TestCase):
         self.assertEqual(data['serviceCd'], '320')
         self.assertEqual(data['versionCd'], '022')
 
-        self.assertEqual(data['radar_chart'], {
-            '利用者の権利擁護': '5.0',
-            'サービスの質の確保への取組': '5.0',
-            '相談・苦情等への対応': '5.0',
-            '外部機関等との連携': '5.0',
-            '事業運営・管理': '5.0',
-            '安全・衛生管理等': '5.0',
-            '従業者の研修等': '4.0'
-        })
-
-        self.assertEqual(data['kani_table1'], {
-            '運営方針': '利用者様の心に寄り添った介護・家族同様な生活',
-            '事業開始年月日': '2005/10/24',
-            '協力医療機関': '内藤クリニック'
-        })
+        self.maxDiff = None # テスト結果のデバッグ出力強化
+        self.assertEqual(list(data.keys()), [
+            'prefCd',
+            'prefName',
+            'jigyosyoCd',
+            'jigyosyoName',
+            'serviceCd',
+            'serviceName',
+            'versionCd',
+            'postalCode',
+            'jigyosyoAddress',
+            'latitudeLongitude',
+            'tel',
+            'fax',
+            '運営状況：レーダーチャート　（ ）', # '　' = '\u3000
+            '事業所概要',
+            'サービス内容',
+            '設備の状況',
+            '利用料',
+            '従業者情報',
+            '利用者情報',
+            #'介護報酬の加算状況', # ajaxで追加ロードしているので単純な方法では取得できない
+            'その他'
+        ])
+        self.assertEqual(data['運営状況：レーダーチャート　（ ）']['利用者の権利擁護'], '5.0') # '　' = '\u3000
+        self.assertEqual(data['事業所概要']['事業開始年月日'], '2005/10/24')
+        self.assertEqual(data['サービス内容']['入居条件'], 'ない')
+        self.assertEqual(data['設備の状況']['消火設備の有無'], 'あり')
+        self.assertEqual(data['利用料']['家賃（月額）'], '85,000円')
+        self.assertEqual(data['従業者情報']['夜勤を行う従業者数'], '3人')
+        self.assertEqual(data['利用者情報']['入居率'], '90％')
+        self.assertEqual(data['その他']['苦情相談窓口'], '011-384-0123')
 
     def test_parse_radar_chart(self):
         f = open('testdata/kani_script01.html', 'r')

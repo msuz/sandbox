@@ -10,24 +10,43 @@ class KaniPage(DetailPage):
     # 「事業所の概要」ページを解析してデータを取得する
     # @param1: HTMLテキスト
     # @return: dict型で整形したデータ
-    @staticmethod
-    def parse(page_text):
+    @classmethod
+    def parse(cls, page_text):
         soup = BeautifulSoup(page_text, 'html.parser')
         if not soup.select_one('title'): return None # Error
 
         # 基本的な情報
-        data = KaniPage.parse_basic_info(soup)
+        data = cls.parse_basic_info(soup)
 
-        # <script>からレーダーチャートの値を読み取る
-        data['radar_chart'] = KaniPage.parse_radar_chart(soup.select_one('script:-soup-contains("chartRadarData")'))
+        # <div class="tab-content content-item">を起点に対象データを探す
+        divs = soup.select('div.tab-content.content-item')
+        if not divs: return data # empty
+        for div in divs:
+            # <h2>内のテキストをkeyにする
+            h2 = div.select_one('h2')
+            if not h2: continue # 無ければスキップ
+            k = cls.parse_h2(h2)
 
-        # <table>から詳細情報を動的に解析する
-        for i in range(1,2):
-            elements = soup.select('div#tableGroup-' + str(i) + ' table tr')
-            if not elements: continue
-            data['kani_table' + str(i)] = KaniPage.parse_table(elements)
+            # コンテンツの種類によって処理を振り分ける
+            if div.select('div#legendRaderdivWrap'): # レーダーチャートの場合、
+                # <script>から値を読み取る
+                script = soup.select_one('script:-soup-contains("chartRadarData")')
+                v = cls.parse_radar_chart(script)
+                data[k] = v
+            elif div.select('table'): # <table>の場合、
+                # <table>から値を読み取る
+                tables = div.select('table')
+                for table in tables:
+                    # 複数ある場合はkeyに連番を割り振る
+                    new_key = cls.rename_duplicated_key(k, data.keys())
+                    trs = table.select('tr')
+                    v = cls.parse_table(trs)
+                    data[new_key] = v
+            else: # 該当するものがなければ
+                data[k] = '' # 空文字を代入
 
         return data
+
 
     # JavaScriptを解析して運営状況レーダーチャートのデータを取得する
     # @param1 script: BeautifulSoup().select_one()で取得した<script>タグ

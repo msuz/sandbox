@@ -2,7 +2,7 @@
 
 import re
 import json
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 class DetailPage:
 
@@ -119,6 +119,20 @@ class DetailPage:
             new_key = '%s(%s)' % (key, i) # 末尾に付ける
             if not new_key in keys: return new_key # 重複してなかったらそれを返す
         return None # Error
+
+    # <h2>の値を文字列として返す。子要素は除外
+    # @param1 trs: BeautifulSoup().select()で取得した<h2>タグ
+    # @return: 文字列
+    @staticmethod
+    def parse_h2(h2):
+        if not h2: return None # Error
+        l = [
+            str(e).replace('\n',' ').strip()
+            for e in h2.contents
+            if type(e) is NavigableString
+        ]
+        s = ' '.join(l) # 区切り文字は空白
+        return s
 
     # <th>リストの値を文字列として返す
     # @param1 trs: BeautifulSoup().select()で取得した<th>タグのリスト
