@@ -23,7 +23,7 @@ class KihonPage(DetailPage):
             # <h2>内のテキストをkeyにする
             h2 = div.select_one('h2')
             if not h2: continue # 無ければスキップ
-            k = h2.get_text().replace('\n', ' ').strip()
+            k = cls.parse_h2(h2)
             # <table>からvalueを生成する
             tables = div.select('table')
             if not tables: # <table>が無ければ

@@ -10,8 +10,8 @@ class FeaturePage(DetailPage):
     # 「事業所の特色」ページを解析してデータを取得する
     # @param1: HTMLテキスト
     # @return: dict型で整形したデータ
-    @staticmethod
-    def parse(page_text):
+    @classmethod
+    def parse(cls, page_text):
         soup = BeautifulSoup(page_text, 'html.parser')
         if not soup.select_one('title'): return None # Error
 
@@ -28,7 +28,7 @@ class FeaturePage(DetailPage):
             if bool(h2.get('class')) and ('modal-title' in h2.get('class')): continue
 
             # <h2>内のテキストをkeyにする
-            k = h2.get_text().replace('\n', ' ').strip()
+            k = cls.parse_h2(h2)
 
             # <h2>の周辺要素を元にvalueを生成する
             n = h2.find_next() # 次要素
@@ -36,10 +36,10 @@ class FeaturePage(DetailPage):
             l_id = n.select_one('.legenddiv').get('id') if n.select('.legenddiv') else '' # 次要素内のグラフ要素id
 
             # 専用の解析処理があればそれを使う、無ければデフォルト処理
-            if hasattr(FeaturePage, "parse_" + p_id): # 親要素idに対応する解析処理
-                v = getattr(FeaturePage, "parse_" + p_id)(n)
-            elif hasattr(FeaturePage, "parse_" + l_id): # チャート表示内容の解析処理
-                v = getattr(FeaturePage, "parse_" + l_id)(script)
+            if hasattr(cls, "parse_" + p_id): # 親要素idに対応する解析処理
+                v = getattr(cls, "parse_" + p_id)(n)
+            elif hasattr(cls, "parse_" + l_id): # チャート表示内容の解析処理
+                v = getattr(cls, "parse_" + l_id)(script)
             else: # デフォルト
                 # 要素のテキスト
                 v = n.get_text().replace('\n', ' ').strip() # 改行コードはスペースに
