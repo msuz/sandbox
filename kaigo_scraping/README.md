@@ -79,9 +79,19 @@ OK
 ```bash
 $ python -m unittest tests.test_unei_page -v
 test_parse (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table01 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table02 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table03 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table04 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table05 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table06 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table07 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table08 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table09 (tests.test_unei_page.TestUneiPage) ... ok
+test_parse_checklist_table10 (tests.test_unei_page.TestUneiPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.049s
+Ran 11 tests in 0.105s
 
 OK
 ```
