@@ -39,8 +39,7 @@ class KaniPage(DetailPage):
                 for table in tables:
                     # 複数ある場合はkeyに連番を割り振る
                     new_key = cls.rename_duplicated_key(k, data.keys())
-                    trs = table.select('tr')
-                    v = cls.parse_table(trs)
+                    v = cls.parse_table(table)
                     data[new_key] = v
             else: # 該当するものがなければ
                 data[k] = '' # 空文字を代入

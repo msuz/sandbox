@@ -47,8 +47,8 @@ class TestKihonPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KihonPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KihonPage.parse_table(table)
 
         self.maxDiff = None # テスト結果のデバッグ出力強化
         self.assertEqual(data, {
@@ -74,8 +74,8 @@ class TestKihonPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KihonPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KihonPage.parse_table(table)
 
         self.maxDiff = None # テスト結果のデバッグ出力強化
         # 複数の <td> にまたがる値は半角スペース区切り
@@ -141,8 +141,8 @@ class TestKihonPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KihonPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KihonPage.parse_table(table)
 
         self.maxDiff = None # テスト結果のデバッグ出力強化
         self.assertEqual(data, {
@@ -174,8 +174,8 @@ class TestKihonPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KihonPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KihonPage.parse_table(table)
 
         self.maxDiff = None # テスト結果のデバッグ出力強化
         self.assertEqual(data, {
@@ -220,8 +220,8 @@ class TestKihonPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KihonPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KihonPage.parse_table(table)
 
         self.maxDiff = None # テスト結果のデバッグ出力強化
         self.assertEqual(data, {
@@ -365,8 +365,8 @@ class TestKihonPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KihonPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KihonPage.parse_table(table)
 
         self.maxDiff = None # テスト結果のデバッグ出力強化
         self.assertEqual(data, {

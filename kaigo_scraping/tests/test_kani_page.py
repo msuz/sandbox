@@ -95,8 +95,8 @@ class TestKaniPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KaniPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KaniPage.parse_table(table)
         self.assertEqual(data, {
             '運営方針': '利用者様の心に寄り添った介護・家族同様な生活',
             '事業開始年月日': '2005/10/24',
@@ -108,8 +108,8 @@ class TestKaniPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KaniPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KaniPage.parse_table(table)
         self.assertEqual(data, {
             '短期利用認知症対応型共同生活介護の提供': 'なし',
             '入居条件': 'ない',
@@ -125,8 +125,8 @@ class TestKaniPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KaniPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KaniPage.parse_table(table)
         self.assertEqual(data, {
             '居室の状況__二人部屋': 'なし',
             '消火設備の有無': 'あり'
@@ -137,8 +137,8 @@ class TestKaniPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KaniPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KaniPage.parse_table(table)
         self.assertEqual(data, {
             '家賃（月額）': '85,000円',
             '敷金': '円',
@@ -152,8 +152,8 @@ class TestKaniPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KaniPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KaniPage.parse_table(table)
         self.assertEqual(data, {
             '総従業者数': '9人',
             '計画作成担当者数__常勤': '1人',
@@ -173,8 +173,8 @@ class TestKaniPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KaniPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KaniPage.parse_table(table)
         self.assertEqual(data, {
             '利用定員　※＜＞内の数値は都道府県平均': '1ユニット9人＜14.8人＞', # '　' = '\u3000'
             '入居率': '90％',
@@ -194,8 +194,8 @@ class TestKaniPage(TestCase):
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')
-        trs = soup.select('tr')
-        data = KaniPage.parse_table(trs)
+        table = soup.select_one('table')
+        data = KaniPage.parse_table(table)
         self.assertEqual(data, {
             '苦情相談窓口': '011-384-0123',
             '利用者の意見を把握する取組__有無': 'なし',

@@ -44,10 +44,12 @@ class DetailPage:
 
     # ページ下部に複数個存在する複雑な表を解析してデータを取得する
     # ※要件が複雑なのでバグる可能性が高い。要注意！要テスト！！
-    # @param1 trs: BeautifulSoup().select()で取得した<tr>タグのリスト
+    # @param1 table: BeautifulSoup().select_one()で取得した<table>タグ
     # @return: dict型で整形したデータ
     @classmethod
-    def parse_table(cls, trs):
+    def parse_table(cls, table):
+        if not table: return None
+        trs = table.select('tr')
         if not trs: return None
 
         # 変数を初期化
@@ -169,12 +171,12 @@ class DetailPage:
         v = re.sub('  +', ' ', v).strip()
         return v
 
-    @staticmethod
     # JavaScript内で定義されている変数の値を取得する
     # ※ var __NAME__ = [__VALUE__]; の書式で記述されていることが条件
     # @param1 script:
     # @param2 name: JavaScript内で記述されている変数名
     # @return: JSONを解釈した変数。dict型のハズ
+    @staticmethod
     def parse_script_var(script, name):
         code = script.get_text().replace('\n', ' ').strip()
         json_str = re.sub(r'^.*var ' + name + r' = (\[[^;]+\]);.*$', r'\1', code)
