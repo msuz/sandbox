@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 class TestKihonPage(TestCase):
 
     def test_parse(self):
-        f = open('testdata/kihon.html', 'r')
+        f = open('testdata/kihon_01-0171000268-00-022.html', 'r')
         page_text = f.read()
         f.close()
         self.assertTrue('グループホームほのぼのさくら' in page_text)

@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 class TestKaniPage(TestCase):
 
     def test_parse(self):
-        f = open('testdata/kani.html', 'r')
+        f = open('testdata/kani_01-0171000268-00-022.html', 'r')
         page_text = f.read()
         f.close()
         self.assertTrue('グループホームほのぼのさくら' in page_text)
@@ -69,7 +69,7 @@ class TestKaniPage(TestCase):
         })
 
     def test_parse_basic_info(self):
-        f = open('testdata/kani.html', 'r')
+        f = open('testdata/kani_01-0171000268-00-022.html', 'r')
         page_text = f.read()
         f.close()
         soup = BeautifulSoup(page_text, 'html.parser')

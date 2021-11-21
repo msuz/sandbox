@@ -8,7 +8,7 @@ from pprint import pprint as pp
 class TestUneiPage(TestCase):
 
     def test_parse(self):
-        f = open('testdata/unei.html', 'r')
+        f = open('testdata/unei_01-0171000268-00-022.html', 'r')
         page_text = f.read()
         f.close()
         self.assertTrue('グループホームほのぼのさくら' in page_text)
