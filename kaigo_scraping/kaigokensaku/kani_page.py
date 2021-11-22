@@ -53,7 +53,7 @@ class KaniPage(DetailPage):
     @staticmethod
     def parse_radar_chart(script):
         if not script: return None
-        code = script.get_text().replace('\n', ' ').strip()
+        code = script.get_text().replace('\n', ' ').replace('\r','').strip()
         json_str = re.sub(r'^.*var chartRadarData = \[([^;]+)\];.*$', r'\1', code)
         json_str = json_str.replace(': jigyosyoName', ': "jigyosyoName"')
         json_str = json_str.replace(': prefName', ': "prefName"')

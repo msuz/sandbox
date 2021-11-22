@@ -42,7 +42,7 @@ class FeaturePage(DetailPage):
                 v = getattr(cls, "parse_" + l_id)(script)
             else: # デフォルト
                 # 要素のテキスト
-                v = n.get_text().replace('\n', ' ').strip() # 改行コードはスペースに
+                v = n.get_text().replace('\n', ' ').replace('\r','').strip() # 改行コードはスペースに
                 v = re.sub('  +', ' ', v).strip() # 余分なスペースは削除
 
             data[k] = v # dictに追加
@@ -58,10 +58,10 @@ class FeaturePage(DetailPage):
         data = {}
         for dt in dts:
             # <dt>内のテキストをkeyにする
-            k = dt.get_text().replace('\n', ' ').strip()
+            k = dt.get_text().replace('\n', ' ').replace('\r','').strip()
             # <dd>内のテキストをvalueにする
             # ※<li>をリストにする手もあるが階層が深くなり過ぎるので文字列型に集約する
-            v = dt.find_next().get_text(' ').replace('\n', ' ').strip() # タグの区切りと改行コードはスペースに
+            v = dt.find_next().get_text(' ').replace('\n', ' ').replace('\r','').strip() # タグの区切りと改行コードはスペースに
             v = re.sub('  +', ' ', v).strip() # 余分なスペースは削除
             data[k] = v
         return data

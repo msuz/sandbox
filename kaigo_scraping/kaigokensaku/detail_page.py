@@ -129,7 +129,7 @@ class DetailPage:
     def parse_h2(h2):
         if not h2: return None # Error
         l = [
-            str(e).replace('\n',' ').strip()
+            str(e).replace('\n',' ').replace('\r','').strip()
             for e in h2.contents
             if type(e) is NavigableString
         ]
@@ -142,7 +142,7 @@ class DetailPage:
     @staticmethod
     def parse_ths(ths):
         if not ths: return None # Error
-        l = [th.get_text().replace('\n',' ').strip() for th in ths]
+        l = [th.get_text().replace('\n',' ').replace('\r','').strip() for th in ths]
         s = '__'.join(l) # 区切り文字は任意、ひとまずアンダースコア2つにしておく
         return s
 
@@ -163,7 +163,7 @@ class DetailPage:
     def parse_td(td):
         if not td: return None # Error
         # <br>等のタグと改行コードは半角スペース1つに変換する
-        v = td.get_text(' ').replace('\n',' ').strip()
+        v = td.get_text(' ').replace('\n',' ').replace('\r','').strip()
         # 画像があればalt値を取得。1つ目のみ、順番はテキストよりも前に固定する
         if td.select_one('img'):
             v = td.select_one('img').get('alt').strip() + ' ' + v
@@ -178,7 +178,7 @@ class DetailPage:
     # @return: JSONを解釈した変数。dict型のハズ
     @staticmethod
     def parse_script_var(script, name):
-        code = script.get_text().replace('\n', ' ').strip()
+        code = script.get_text().replace('\n', ' ').replace('\r','').strip()
         json_str = re.sub(r'^.*var ' + name + r' = (\[[^;]+\]);.*$', r'\1', code)
         data = json.loads(json_str)
         return data
