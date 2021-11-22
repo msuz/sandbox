@@ -42,18 +42,35 @@ class TestDetailPages(TestCase):
         self.assertEqual(data['original'], True)
         self.assertEqual(data['latitudeLongitude'], '42.408990800000000,141.103421000000020')
 
+    def test_get_csv_header(self):
+        expect = '"prefCd","prefName","jigyosyoCd","jigyosyoName","serviceCd","serviceName","versionCd",'\
+            '"postalCode","jigyosyoAddress","latitudeLongitude","tel","fax","homepage","uneiJokyo","jigyosyoTaiyou","serviceNaiyo","riyoryo","jugyoinInfo","riyosyaInfo","sonota",'\
+            '"ukeireNinzu","serviceNaiyoText","serviceHinsitsuText","syoguKaizen","heisetsuService","hokengaiRiyoryoText","jugyoinSexRate","jugyoinAgeRate","jugyoinText","riyosyaSexRate","riyosyaAgeRate","riyosyaText",'\
+            '"kihon_1","kihon_1_2","kihon_2","kihon_3","kihon_4","kihon_5",'\
+            '"unei_1","unei_2","unei_3","unei_4","unei_5","unei_6","unei_7","unei_8","unei_9","unei_10",'\
+            '"original"'
+        result = DetailPages.get_csv_header()
+        self.assertEqual(result, expect)
+
+        keys = ['prefCd', '受け入れ可能人数', '４．介護サービスの内容に関する事項']
+        expect = '"prefCd","ukeireNinzu","kihon_4"'
+        result = DetailPages.get_csv_header(keys)
+        self.assertEqual(result, expect)
+
     def test_to_csv(self):
         d = DetailPages(self.URL)
+        keys = ['prefCd','jigyosyoCd']
         data = {'prefCd': '01'}
         expect = '"01",""'
         d.set_data(data)
-        result = d.to_csv()
+        result = d.to_csv(keys)
         self.assertEqual(result, expect)
 
+        keys = ['prefCd','jigyosyoCd']
         data = {'prefCd': '01', 'jigyosyoCd': {'a': '1'}}
         expect = '"01","{\'a\': \'1\'}"'
         d.set_data(data)
-        result = d.to_csv()
+        result = d.to_csv(keys)
         self.assertEqual(result, expect)
 
     def test_get_page_text(self):
