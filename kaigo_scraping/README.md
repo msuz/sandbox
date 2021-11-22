@@ -2,9 +2,9 @@
 
 ```
 $ python -m unittest discover tests
-..........................................
+...........................................
 ----------------------------------------------------------------------
-Ran 42 tests in 4.634s
+Ran 43 tests in 4.623s
 
 OK
 ```
@@ -99,9 +99,10 @@ OK
 ```bash
 $ python -m unittest tests.test_original_page -v
 test_parse (tests.test_original_page.TestOriginalPage) ... ok
+test_parse_empty (tests.test_original_page.TestOriginalPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.013s
+Ran 2 tests in 0.033s
 
 OK
 ```
