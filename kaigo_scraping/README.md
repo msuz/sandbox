@@ -2,9 +2,9 @@
 
 ```
 $ python -m unittest discover tests
-...........................................
+............................................
 ----------------------------------------------------------------------
-Ran 43 tests in 4.623s
+Ran 44 tests in 5.508s
 
 OK
 ```
@@ -12,13 +12,14 @@ OK
 ```bash
 $ python -m unittest tests.test_detail_pages -v
 test_generate_urls (tests.test_detail_pages.TestDetailPages) ... ok
+test_get_csv_header (tests.test_detail_pages.TestDetailPages) ... ok
 test_get_page_text (tests.test_detail_pages.TestDetailPages) ... ok
 test_init_urls (tests.test_detail_pages.TestDetailPages) ... ok
 test_load (tests.test_detail_pages.TestDetailPages) ... ok
 test_to_csv (tests.test_detail_pages.TestDetailPages) ... ok
 
 ----------------------------------------------------------------------
-Ran 5 tests in 3.999s
+Ran 6 tests in 3.053s
 
 OK
 ```
