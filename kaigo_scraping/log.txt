@@ -1,0 +1,4 @@
+INFO:__main__:url: https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0113513220-00&ServiceCd=110
+INFO:__main__:url: https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0115012551-00&ServiceCd=110
+INFO:__main__:url: https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0151580024-00&ServiceCd=110
+INFO:__main__:max count [3]
