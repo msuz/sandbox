@@ -157,7 +157,7 @@ class DetailPages:
     @staticmethod
     def generate_urls(url):
         base = "https://www.kaigokensaku.mhlw.go.jp"
-        kani_pattern = r"/([0-9]+)/.+_detail_([0-9]+)_kani.+JigyosyoCd=([0-9\-]+)&ServiceCd=([0-9]+)"
+        kani_pattern = r"/([0-9]+)/.+_detail_([0-9]+)_kani.+JigyosyoCd=([0-9A-Z\-]+)&ServiceCd=([0-9]+)"
         m = re.search(kani_pattern, url)
         if not m: return None
         urls = {

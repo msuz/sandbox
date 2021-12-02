@@ -30,6 +30,16 @@ class TestDetailPages(TestCase):
         urls = DetailPages.generate_urls(self.URL_RELATIVE)
         self.assertEqual(urls, self.URLS)
 
+        url = 'http://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_035_kani=true&JigyosyoCd=01B3700015-00&ServiceCd=551'
+        urls = {
+            'kani': 'https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_035_kani=true&JigyosyoCd=01B3700015-00&ServiceCd=551',
+            'feature': 'https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_feature_index=true&JigyosyoCd=01B3700015-00&ServiceCd=551',
+            'kihon': 'https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_035_kihon=true&JigyosyoCd=01B3700015-00&ServiceCd=551',
+            'unei': 'https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_035_unei=true&JigyosyoCd=01B3700015-00&ServiceCd=551',
+            'original': 'https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_original_index=true&JigyosyoCd=01B3700015-00&ServiceCd=551'}
+        result = DetailPages.generate_urls(url)
+        self.assertEqual(result, urls)
+
     def test_load(self):
         d = DetailPages(self.URL)
         result = d.load()
