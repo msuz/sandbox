@@ -1,10 +1,10 @@
 # Test Result
 
-```
+```bash
 $ python -m unittest discover tests
-............................................
+..............................................
 ----------------------------------------------------------------------
-Ran 44 tests in 5.508s
+Ran 46 tests in 7.617s
 
 OK
 ```
@@ -104,6 +104,17 @@ test_parse_empty (tests.test_original_page.TestOriginalPage) ... ok
 
 ----------------------------------------------------------------------
 Ran 2 tests in 0.033s
+
+OK
+```
+
+```bash
+$ python -m unittest tests.test_latestinfo_page -v
+test_get (tests.test_latestinfo_page.TestLatestinfoPage) ... ok
+test_parse (tests.test_latestinfo_page.TestLatestinfoPage) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.358s
 
 OK
 ```
