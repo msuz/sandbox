@@ -114,7 +114,7 @@ class DetailPages:
 
             # ページを解析してデータを取得する
             page_data = cls.parse(page_text)
-            if not page_data: return False # Error
+            if not page_data: page_data = {} # Not Error
 
             # インスタンス変数に値を追加する
             self.data[k] = True
