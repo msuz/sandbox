@@ -52,6 +52,17 @@ class TestDetailPages(TestCase):
         self.assertEqual(data['original'], True)
         self.assertEqual(data['latitudeLongitude'], '42.408990800000000,141.103421000000020')
 
+    def test_load_not_found(self):
+        url = 'https://www.kaigokensaku.mhlw.go.jp/00/index.php?action_kouhyou_detail_000_kani=true&JigyosyoCd=0000000000-00&ServiceCd=000'
+        d = DetailPages(url)
+        result = d.load()
+        self.assertFalse(result)
+
+        url = 'https://www.kaigokensaku.mhlw.go.jp/12/index.php?action_kouhyou_detail_007_kani=true&JigyosyoCd=1276300033-00&ServiceCd=720'
+        d = DetailPages(url)
+        result = d.load()
+        self.assertFalse(result)
+
     def test_get_csv_header(self):
         expect = '"prefCd","prefName","jigyosyoCd","jigyosyoName","serviceCd","serviceName","versionCd",'\
             '"postalCode","jigyosyoAddress","latitudeLongitude","tel","fax","homepage","uneiJokyo","jigyosyoTaiyou","serviceNaiyo","riyoryo","jugyoinInfo","riyosyaInfo","sonota",'\

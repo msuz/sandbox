@@ -114,7 +114,11 @@ class DetailPages:
 
             # ページを解析してデータを取得する
             page_data = cls.parse(page_text)
-            if not page_data: page_data = {} # Not Error
+            if not page_data:
+                if k == 'kani':
+                    return False # KaniPage が取得できなかったらエラー扱いで中断
+                else:
+                    page_data = {} # それ以外なら空白として処理を継続
 
             # インスタンス変数に値を追加する
             self.data[k] = True
