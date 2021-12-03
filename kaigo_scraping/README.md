@@ -18,6 +18,7 @@ $ python get_list.py > url_list.txt
 ```
 
 or write target urls into the text file
+
 absolute url
 ```
 $ vi url_list.txt
