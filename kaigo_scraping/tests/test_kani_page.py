@@ -51,6 +51,14 @@ class TestKaniPage(TestCase):
         self.assertEqual(data['利用者情報']['入居率'], '90％')
         self.assertEqual(data['その他']['苦情相談窓口'], '011-384-0123')
 
+    def test_parse_not_found(self):
+        f = open('testdata/not_found.html', 'r')
+        page_text = f.read()
+        f.close()
+        data = KaniPage.parse(page_text)
+
+        self.assertEqual(data, None)
+
     def test_parse_radar_chart(self):
         f = open('testdata/kani_script01.html', 'r')
         page_text = f.read()

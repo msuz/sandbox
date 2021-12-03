@@ -2,9 +2,9 @@
 
 ```bash
 $ python -m unittest discover tests
-..............................................
+...............................................
 ----------------------------------------------------------------------
-Ran 46 tests in 7.617s
+Ran 47 tests in 7.087s
 
 OK
 ```
@@ -35,10 +35,11 @@ test_parse_kani_table04 (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_kani_table05 (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_kani_table06 (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_kani_table07 (tests.test_kani_page.TestKaniPage) ... ok
+test_parse_not_found (tests.test_kani_page.TestKaniPage) ... ok
 test_parse_radar_chart (tests.test_kani_page.TestKaniPage) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 0.115s
+Ran 11 tests in 0.121s
 
 OK
 ```

@@ -12,7 +12,7 @@ class DetailPage:
     @staticmethod
     def parse_basic_info(soup):
         data = {}
-
+        if not soup.select_one('input[name="PrefCd"]'): return None # Error
         data['prefCd'] = soup.select_one('input[name="PrefCd"]')['value']
         data['prefName'] = soup.select_one('li.breadcrumb-item a[href="index.php"]').get_text()
         data['jigyosyoCd'] = soup.select_one('span#jigyosyoName')['data-jigyosyocd']

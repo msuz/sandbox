@@ -17,6 +17,7 @@ class KaniPage(DetailPage):
 
         # 基本的な情報
         data = cls.parse_basic_info(soup)
+        if not data: return None # Error
 
         # <div class="tab-content content-item">を起点に対象データを探す
         divs = soup.select('div.tab-content.content-item')
