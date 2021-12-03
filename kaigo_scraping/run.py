@@ -36,7 +36,7 @@ from kaigokensaku.detail_pages import DetailPages
 #
 # 設定値 (実行前に手動で書き換えるべし)
 #
-MAX_COUNT = 0 # 実行回数の上限。 0 = ∞
+MAX_COUNT = 3 # 実行回数の上限。 0 = ∞
 LOGGER_LEVEL = logging.INFO # CRITICAL:50, ERROR:40, WARNING:30, INFO:20, DEBUG:10, NOTSET:0
 
 #

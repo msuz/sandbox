@@ -12,7 +12,13 @@ install packages
 $ pip install requests bs4
 ```
 
-write target urls into the text file
+get target urls from latest info page
+```
+$ python get_list.py > url_list.txt
+```
+
+or write target urls into the text file
+absolute url
 ```
 $ vi url_list.txt
 https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0113513220-00&ServiceCd=110
@@ -20,6 +26,16 @@ https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=
 https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0151580024-00&ServiceCd=110
 https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0170100945-00&ServiceCd=110
 https://www.kaigokensaku.mhlw.go.jp/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0170102362-00&ServiceCd=110
+```
+
+rerative url
+```
+$ vi url_list.txt
+/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0113513220-00&ServiceCd=110
+/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0115012551-00&ServiceCd=110
+/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0151580024-00&ServiceCd=110
+/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0170100945-00&ServiceCd=110
+/01/index.php?action_kouhyou_detail_001_kani=true&JigyosyoCd=0170102362-00&ServiceCd=110
 ```
 
 customize config in the script file
