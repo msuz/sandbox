@@ -19,7 +19,13 @@ Ran 9 tests in 0.025s
 
 OK
 Destroying test database for alias 'default'...
+
+
+$ python manage.py test polls.tests.QuestionDetailViewTests.test_future_question
+
+$ python manage.py test polls/ --pattern="tests*.py"
 ```
+
 
 Debug in shell as a test environment
 
