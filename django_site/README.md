@@ -6,6 +6,11 @@ Start server
 $ python manage.py runserver
 ```
 
+Open url via web brawser
+
+- http://localhost:8000/polls/
+- http://localhost:8000/admin/
+
 Run test
 
 ```
@@ -41,4 +46,18 @@ client = Client()
 res = client.get(reverse('polls:index'))
 
 res.context['question']
+```
+
+Run command
+
+```
+$ python manage.py VoteSummary
+[1] What's up?
+ - Not Much [2 vote]
+ - The Sky [8 vote]
+ - Just hacking again [2 vote]
+[2] Where are you from?
+[3] when do you drink tea?
+[4] Past question.
+[5] My First Question
 ```
