@@ -1,7 +1,9 @@
+from io import StringIO
 import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.core.management import call_command
 from .models import Question
 
 def create_question(question_text, days):
@@ -71,3 +73,24 @@ class QuestionDetailViewTests(TestCase):
         question = create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse('polls:detail', args=(question.id,)))
         self.assertContains(response, question.question_text)
+
+class VoteSummaryCommandTests(TestCase):
+
+    def test_no_questions(self):
+        q1 = create_question(question_text="Question 1", days=0)
+        q1.choice_set.create(choice_text="Choice 1-1", votes=1)
+        q1.choice_set.create(choice_text="Choice 1-2", votes=3)
+        q2 = create_question(question_text="Question 2", days=0)
+        q2.choice_set.create(choice_text="Choice 2-1", votes=2)
+        q2.choice_set.create(choice_text="Choice 2-2", votes=4)
+
+        o = StringIO()
+        call_command('vote_summary', stdout=o)
+        v = o.getvalue()
+
+        self.assertIn("[1] Question 1", v)
+        self.assertIn(" - Choice 1-1 [1 votes]", v)
+        self.assertIn(" - Choice 1-2 [3 votes]", v)
+        self.assertIn("[2] Question 2", v)
+        self.assertIn(" - Choice 2-1 [2 votes]", v)
+        self.assertIn(" - Choice 2-2 [4 votes]", v)
