@@ -10,23 +10,36 @@ Open url via web brawser
 
 - http://localhost:8000/polls/
 - http://localhost:8000/admin/
+- http://localhost:8000/membersite/
 
 Run test
 
 ```
 $ python manage.py test polls
-Found 9 test(s).
+Found 10 test(s).
 Creating test database for alias 'default'...
 System check identified no issues (0 silenced).
-.........
+WARNING:django.request:Not Found: /polls/1/
+..........
 ----------------------------------------------------------------------
-Ran 9 tests in 0.025s
+Ran 10 tests in 0.031s
 
 OK
 Destroying test database for alias 'default'...
 
 
 $ python manage.py test polls.tests.QuestionDetailViewTests.test_future_question
+Found 1 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+WARNING:django.request:Not Found: /polls/1/
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+OK
+Destroying test database for alias 'default'...
+
 
 $ python manage.py test polls/ --pattern="tests*.py"
 ```
@@ -51,13 +64,14 @@ res.context['question']
 Run command
 
 ```
-$ python manage.py VoteSummary
+$ python manage.py vote_summary
 [1] What's up?
- - Not Much [2 vote]
- - The Sky [8 vote]
- - Just hacking again [2 vote]
+ - Not Much [2 votes]
+ - The Sky [11 votes]
+ - Just hacking again [4 votes]
 [2] Where are you from?
 [3] when do you drink tea?
+ - morning [0 votes]
 [4] Past question.
 [5] My First Question
 ```

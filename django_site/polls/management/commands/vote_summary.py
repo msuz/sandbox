@@ -6,5 +6,5 @@ class Command(BaseCommand):
         questions = Question.objects.all()
         for q in questions:
             self.stdout.write(f"[{q.id}] {q.question_text}")
-            for c in q.choice_set.all():
+            for c in q.choices.all():
                 self.stdout.write(f" - {c.choice_text} [{c.votes} votes]")
