@@ -20,7 +20,7 @@ class Question(models.Model):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= now
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 

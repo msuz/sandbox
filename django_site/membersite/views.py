@@ -8,6 +8,6 @@ class IndexView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['question_list'] = Question.objects.all()
+        context['question_list'] = Question.objects.all().prefetch_related('choices')
         return render(self.request, self.template_name, context)
 
