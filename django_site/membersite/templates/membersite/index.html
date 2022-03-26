@@ -1,13 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="mt-4">MySite powered by Simple Sidebar</h1>
-<p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-<p>
-    Make sure to keep all page content within the
-    <code>#page-content-wrapper</code>
-    . The top navbar is optional, and just for demonstration. Just create an element with the
-    <code>#sidebarToggle</code>
-    ID which will toggle the menu when clicked.
-</p>
+<h1 class="mt-4">Vote Results</h1>
+{% if question_list %}
+    <ul>
+    {% for question in question_list %}
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+
+        <ul>
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% endfor %}
+        </ul>
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
 {% endblock %}
