@@ -19,4 +19,9 @@
     <p>No polls are available.</p>
 {% endif %}
 
+<h1>Permissions</h1>
+<p>{{ perms.polls }}</p>
+<p>polls.view_question: {{ perms.polls.view_question }}</p>
+<p>polls.view_choice: {{ perms.polls.view_choice }}</p>
+
 {% endblock %}
