@@ -24,4 +24,9 @@
 <p>polls.view_question: {{ perms.polls.view_question }}</p>
 <p>polls.view_choice: {{ perms.polls.view_choice }}</p>
 
+<h1>Profile</h1>
+<p>Area: {{ user.profile.area }}</p>
+<p>Age: [{{ user.profile.age }}]  {{ user.profile.get_age_display }}</p>
+<p>Sex: [{{ user.profile.sex }}] {{ user.profile.get_sex_display }}</p>
+
 {% endblock %}
