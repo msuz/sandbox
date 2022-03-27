@@ -75,3 +75,10 @@ $ python manage.py vote_summary
 [4] Past question.
 [5] My First Question
 ```
+
+Link
+
+- https://docs.djangoproject.com/ja/4.0/
+- https://django-debug-toolbar.readthedocs.io/en/stable/installation.html
+- https://qiita.com/gragragrao/items/9a85a372a9c3eec06243
+- https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication
