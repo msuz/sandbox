@@ -3,6 +3,7 @@ from aws_cdk import (
     Duration,
     aws_ec2 as ec2,
     aws_rds as rds,
+    aws_iam as iam,
     aws_secretsmanager as secretsmanager,
     CfnOutput,
 )
@@ -26,20 +27,40 @@ class AwsBigdataStack(Stack):
         self.aurora_cluster = self.create_aurora_cluster()
         self.add_cfn_output("AuroraClusterEndpoint", self.aurora_cluster.cluster_endpoint.hostname)
 
+        # 作業用EC2インスタンスを作成
+        self.work_instance = self.create_work_instance()
+        self.add_cfn_output("WorkInstancePrivateIp", self.work_instance.instance_private_ip)
+
     def create_vpc(self) -> ec2.Vpc:
-        """VPC を作成するメソッド"""
-        return ec2.Vpc(
+        """パブリックサブネットなし、VPC エンドポイントを利用"""
+        vpc = ec2.Vpc(
             self, "BigDataVPC",
             ip_addresses=ec2.IpAddresses.cidr("10.0.0.0/16"),
-            max_azs=2,  # 2つのAZを使用
+            max_azs=2,
             subnet_configuration=[
                 ec2.SubnetConfiguration(
                     name="PrivateSubnet",
-                    subnet_type=ec2.SubnetType.PRIVATE_ISOLATED,
+                    subnet_type=ec2.SubnetType.PRIVATE_ISOLATED,  # NATなしのプライベートサブネット
                     cidr_mask=24
                 )
             ]
         )
+
+        # VPC エンドポイントの追加（SSM 用）
+        vpc.add_interface_endpoint(
+            "SSMEndpoint",
+            service=ec2.InterfaceVpcEndpointAwsService.SSM
+        )
+        vpc.add_interface_endpoint(
+            "EC2MessagesEndpoint",
+            service=ec2.InterfaceVpcEndpointAwsService.EC2_MESSAGES
+        )
+        vpc.add_interface_endpoint(
+            "SSMMessagesEndpoint",
+            service=ec2.InterfaceVpcEndpointAwsService.SSM_MESSAGES
+        )
+
+        return vpc
 
     def get_private_subnets(self, vpc: ec2.Vpc) -> list:
         """異なる AZ の 2 つのプライベートサブネットを取得するメソッド"""
@@ -73,6 +94,39 @@ class AwsBigdataStack(Stack):
         )
 
         return cluster
+
+    def create_work_instance(self) -> ec2.Instance:
+        """作業用EC2インスタンスを作成するメソッド"""
+        work_sg = ec2.SecurityGroup(
+            self, "WorkInstanceSecurityGroup",
+            vpc=self.vpc,
+            description="Security group for Work Instance",
+        )
+
+        # Aurora へのアクセスを許可
+        self.aurora_cluster.connections.allow_from(work_sg, ec2.Port.tcp(3306), "Allow MySQL access from Work Instance")
+
+        # IAM ロールを作成（SSM 用）
+        work_role = iam.Role(
+            self, "WorkInstanceRole",
+            assumed_by=iam.ServicePrincipal("ec2.amazonaws.com")
+        )
+
+        # SSM のポリシーをアタッチ
+        work_role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name("AmazonSSMManagedInstanceCore"))
+
+        # インスタンスプロファイルを作成
+        work_instance = ec2.Instance(
+            self, "WorkInstance",
+            instance_type=ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
+            machine_image=ec2.MachineImage.latest_amazon_linux(),
+            vpc=self.vpc,
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_ISOLATED),
+            security_group=work_sg,
+            role=work_role,  # IAM ロールを指定
+        )
+
+        return work_instance
 
     def add_cfn_output(self, name: str, value: str):
         """CloudFormation の出力を追加するメソッド"""

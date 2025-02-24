@@ -15,6 +15,8 @@
     ]
   },
   "context": {
+    "aws-cdk:region": "ap-northeast-1",
+    "aws-cdk:account": "768952080193",
     "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
     "@aws-cdk/core:checkSecretUsage": true,
     "@aws-cdk/core:target-partitions": [
